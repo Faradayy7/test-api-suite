@@ -135,7 +135,7 @@ class ApiClient {
       logger.info({
         msg: "API request success",
         method,
-        url,
+        url: maskToken(url),
         status,
         requestId,
         durationMs,
@@ -174,6 +174,11 @@ class ApiClient {
     const sep = endpoint.includes("?") ? "&" : "?";
     return `${this.baseUrl}${endpoint}${query ? sep + query : ""}`;
   }
+}
+
+/** Oculta el token en la URL para los logs */
+function maskToken(url) {
+  return url.replace(/(token=)[^&]+/, "$1[REDACTED]");
 }
 
 module.exports = { ApiClient, ApiError };
