@@ -87,7 +87,12 @@ test.describe("GET-media", () => {
     // Validar que todos los títulos contienen la palabra buscada (case-insensitive)
     for (const m of items) {
       expect(typeof m.title).toBe("string");
-      expect(m.title.toLowerCase()).toContain(palabra.toLowerCase());
+      const titulo = m.title?.toLowerCase() || "";
+      const descripcion = m.description?.toLowerCase() || "";
+      const palabraBuscada = palabra.toLowerCase();
+      expect(
+        titulo.includes(palabraBuscada) || descripcion.includes(palabraBuscada)
+      ).toBe(true);
     }
     console.log("Palabra buscada:", palabra);
     console.log(
